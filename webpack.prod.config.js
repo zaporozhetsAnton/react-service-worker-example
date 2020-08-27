@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const merge = require('webpack-merge');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const workboxPlugin = require('workbox-webpack-plugin');
 
 const common = require('./webpack.common.config');
 
@@ -23,12 +24,21 @@ module.exports = merge(common, {
     }),
     new CopyWebpackPlugin({
       patterns: [
-        { from: path.resolve(__dirname, 'src/assets') },
-        { from: path.resolve(__dirname, 'service-worker.js') }
+        { from: path.resolve(__dirname, 'src/assets') }
       ]
     }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production'),
+    }),
+    new workboxPlugin.GenerateSW({
+      swDest: 'service-worker.js',
+      clientsClaim: true,
+      skipWaiting: true,
+      include: [/\.js$/, /\.svg$/],
+      runtimeCaching: [{
+        urlPattern: new RegExp('staticflickr.com'),
+        handler: 'StaleWhileRevalidate'
+      }]
     })
   ],
   optimization: {
