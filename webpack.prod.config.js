@@ -34,7 +34,7 @@ module.exports = merge(common, {
       swDest: 'service-worker.js',
       clientsClaim: true,
       skipWaiting: true,
-      include: [/\.js$/, /\.svg$/],
+      include: [/\.js$/, /\.svg$/], // after removing this line, web-app will work in offline too.
       runtimeCaching: [{
         urlPattern: new RegExp('staticflickr.com'),
         handler: 'StaleWhileRevalidate'
