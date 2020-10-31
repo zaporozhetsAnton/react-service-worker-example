@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "configured service worker for reactjs project",
   "scripts": {
+    "server": "node server.js",
     "dev": "webpack-dev-server --open --config ./webpack.dev.server.config.js",
     "build": "webpack --config ./webpack.prod.config.js",
     "run-prod": "http-server ./dist/",
@@ -22,10 +23,14 @@
   "author": "zaporozhetsanton@gmail.com",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
     "http-server": "^0.12.3",
     "ngrok": "^3.2.7",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "web-push": "^3.4.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",
@@ -60,6 +65,8 @@
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.10.3",
     "webpack-merge": "^4.2.2",
+    "workbox-core": "^5.1.4",
+    "workbox-precaching": "^5.1.4",
     "workbox-webpack-plugin": "^5.1.3"
   }
 }
