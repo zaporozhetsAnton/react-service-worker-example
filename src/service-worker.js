@@ -1,43 +1,18 @@
-const CACHE_STATIC = 'my-site-cache-v1';
-const CACHE_FLICKR_IMAGES = 'flickr-imgs';
-const urlsToCache = [
-  'app.32ccc5e5616508ca4369.js',
-  'npm.react-dom.7452f274fe23421f8d2e.js',
-  'runtime.99366336a554bd3df1b9.js',
-  'images/logo.svg'
-];
+import { precacheAndRoute } from 'workbox-precaching';
+import { skipWaiting, clientsClaim } from 'workbox-core';
 
-self.addEventListener('install', (event) => {
-  self.skipWaiting();
-  event.waitUntil(
-    caches.open(CACHE_STATIC)
-      .then(function(cache) {
-        console.log('Opened cache');
-        return cache.addAll(urlsToCache);
-      })
-  );
+skipWaiting();
+clientsClaim();
+
+precacheAndRoute(self.__WB_MANIFEST);
+
+self.addEventListener('fetch', function (event) {
+    event.respondWith(
+        caches.match(event.request).then(function (response) {
+            return response || fetch(event.request);
+        }),
+    );
 });
-
-self.addEventListener('activate', event => {
-  event.waitUntil(
-    caches.keys().then(keys => Promise.all(
-      keys.map(key => {
-        if (key !== CACHE_STATIC && key !== CACHE_FLICKR_IMAGES) {
-          return caches.delete(key);
-        }
-      })
-    ))
-  );
-});
-
-self.addEventListener('fetch', function(event) {
-  event.respondWith(
-    caches.match(event.request).then(function(response) {
-      return response || fetch(event.request);
-    })
-  );
-});
-
 
 // Cache only example
 
@@ -47,7 +22,6 @@ self.addEventListener('fetch', function(event) {
 //   event.respondWith(caches.match(event.request));
 // });
 
-
 // Network only example
 
 // self.addEventListener('fetch', function(event) {
@@ -55,7 +29,6 @@ self.addEventListener('fetch', function(event) {
 //   // or simply don't call event.respondWith, which
 //   // will result in default browser behaviour
 // });
-
 
 // Cache, falling back to network example
 
@@ -66,7 +39,6 @@ self.addEventListener('fetch', function(event) {
 //     })
 //   );
 // });
-
 
 // Cache & network race example
 
@@ -93,7 +65,6 @@ self.addEventListener('fetch', function(event) {
 //   );
 // });
 
-
 // Network falling back to cache example
 
 // self.addEventListener('fetch', function(event) {
@@ -103,7 +74,6 @@ self.addEventListener('fetch', function(event) {
 //     })
 //   );
 // });
-
 
 // Example of different strategies
 

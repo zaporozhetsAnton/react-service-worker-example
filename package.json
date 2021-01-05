@@ -59,6 +59,9 @@
     "webpack-bundle-analyzer": "^3.6.1",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.10.3",
-    "webpack-merge": "^4.2.2"
+    "webpack-merge": "^4.2.2",
+    "workbox-core": "^6.0.2",
+    "workbox-precaching": "^6.0.2",
+    "workbox-webpack-plugin": "^6.0.2"
   }
 }
